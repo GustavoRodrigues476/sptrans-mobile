@@ -3,7 +3,7 @@
     "short_name": "mobilidade_urbana_app",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
+    "background_color": "#D4FF73",
     "theme_color": "#0175C2",
     "description": "A new Flutter project.",
     "orientation": "portrait-primary",
