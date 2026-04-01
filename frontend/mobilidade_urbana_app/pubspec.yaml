@@ -17,6 +17,8 @@ dependencies:
   dio: ^5.9.2
   flutter_native_splash: ^2.4.7
   flutter_svg: ^2.2.4
+  smooth_page_indicator: ^2.0.1
+  get: ^4.7.3
 
 dev_dependencies:
   flutter_test:
@@ -25,15 +27,16 @@ dev_dependencies:
   flutter_launcher_icons: ^0.14.4
 
 
-flutter_native_splash:
-  color: "#D4FF73"
-  image: assets/icon/icon.png
-  fullscreen: true              
-
-  #! ANDROID 12+ configuration:
-  android_12:
-    color: "#FFFFFF"
-    image: assets/icon/icon.png    
+#flutter_native_splash:
+#  color: "#D4FF73"
+#  color_dark:
+#  image: assets/icon/icon.png
+#  fullscreen: true
+#
+#  #! ANDROID 12+ configuration:
+#  android_12:
+#    color: "#FFFFFF"
+#    image: assets/icon/icon.png
 
 
 
@@ -57,4 +60,4 @@ flutter:
   assets:
     - assets/icon/icon.png
     - assets/images/bus.svg
-  
+    - assets/logos/

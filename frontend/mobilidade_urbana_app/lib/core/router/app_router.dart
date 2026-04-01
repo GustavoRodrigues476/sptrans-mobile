@@ -1,5 +1,5 @@
 import 'package:go_router/go_router.dart';
-import 'package:mobilidade_urbana_app/features/onboarding/screens/onboarding_page.dart';
+import 'package:mobilidade_urbana_app/features/onboarding/screens/onboarding.dart';
 
 final GoRouter appRouter = GoRouter(
     initialLocation: '/',

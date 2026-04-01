@@ -10,29 +10,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String name = '';
-  String email = '';
-  String theme = '';
-  String language = '';
-  bool notifyUpdates = false;
-  bool notifyPromotions = false;
+
 
   @override
   void initState() {
     super.initState();
-    _loadPrefs();
-  }
-
-  Future<void> _loadPrefs() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      name = prefs.getString('user_name') ?? '';
-      email = prefs.getString('user_email') ?? '';
-      theme = prefs.getString('app_theme') ?? '';
-      language = prefs.getString('app_language') ?? '';
-      notifyUpdates = prefs.getBool('notify_updates') ?? false;
-      notifyPromotions = prefs.getBool('notify_promotions') ?? false;
-    });
+    // _loadPrefs();
   }
 
   Future<void> _resetOnboarding() async {
@@ -61,58 +44,6 @@ class _HomeScreenState extends State<HomeScreen> {
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
-          // Avatar / Saudação
-          Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [Color(0xFF6C63FF), Color(0xFF3B3799)],
-              ),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Row(
-              children: [
-                CircleAvatar(
-                  radius: 30,
-                  backgroundColor: Colors.white.withOpacity(0.2),
-                  child: Text(
-                    name.isNotEmpty ? name[0].toUpperCase() : '?',
-                    style: const TextStyle(
-                        fontSize: 26,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white),
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Olá, $name!',
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold)),
-                    Text(email,
-                        style: const TextStyle(
-                            color: Colors.white70, fontSize: 13)),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 20),
-          _buildSection('Preferências', [
-            _buildInfoTile(Icons.dark_mode_outlined, 'Tema', theme),
-            _buildInfoTile(Icons.language, 'Idioma', language),
-          ]),
-          const SizedBox(height: 16),
-          _buildSection('Notificações', [
-            _buildBoolTile(
-                Icons.system_update_alt, 'Atualizações', notifyUpdates),
-            _buildBoolTile(
-                Icons.local_offer_outlined, 'Promoções', notifyPromotions),
-          ]),
-          const SizedBox(height: 32),
           OutlinedButton.icon(
             onPressed: _resetOnboarding,
             icon: const Icon(Icons.restart_alt_rounded),
