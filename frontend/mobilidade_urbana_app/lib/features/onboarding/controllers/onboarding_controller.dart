@@ -42,39 +42,6 @@ class OnBoardingController extends GetxController {
     pageController.jumpTo(index);
   }
 
-  void nextPage() {
-    if (!canGoNext) return;
-
-    if (currentPageIndex.value == 2) {
-      Get.to(() => const HomeScreen());
-    } else {
-      final page = currentPageIndex.value + 1;
-      pageController.animateToPage(
-        page,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    }
-  }
-
-  void previusPage() {
-    if (currentPageIndex.value == 0) {
-      return;
-    } else {
-      final page = currentPageIndex.value - 1;
-      pageController.animateToPage(
-        page,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    }
-  }
-
-  void skipPage() {
-    currentPageIndex.value = 2;
-    pageController.jumpToPage(2);
-  }
-
   void toggleTransport(String transport, bool value) {
     transportPreferences[transport] = value;
     transportPreferences.refresh();
@@ -94,6 +61,41 @@ class OnBoardingController extends GetxController {
 
   void updateWalkingDuration(double value) {
     walkingDuration.value = value;
+  }
+
+
+
+  void previusPage() {
+    if (currentPageIndex.value == 0) {
+      return;
+    } else {
+      final page = currentPageIndex.value - 1;
+      pageController.animateToPage(
+        page,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  void skipPage() {
+    currentPageIndex.value = 2;
+    pageController.jumpToPage(2);
+  }
+
+  void nextPage() {
+    if (!canGoNext) return;
+
+    if (currentPageIndex.value == 2) {
+      Get.to(() => const HomeScreen());
+    } else {
+      final page = currentPageIndex.value + 1;
+      pageController.animateToPage(
+        page,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
   }
 
 
