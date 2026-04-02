@@ -1,13 +1,18 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
+import 'package:get/get.dart';
+import 'package:mobilidade_urbana_app/features/onboarding/screens/onboarding.dart';
+import 'package:mobilidade_urbana_app/utils/constants/colors.dart';
+import 'package:mobilidade_urbana_app/utils/helpers/helper_functions.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final dark = THelperFunctions.isDarkMode(context);
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -41,9 +46,7 @@ class WelcomeScreen extends StatelessWidget {
                           padding: EdgeInsets.symmetric(horizontal: 16),
                           child: Text(
                             'Encontre rotas claras, com menos baldeações e mais conforto',
-                            style: TextStyle(
-                              fontSize: 14,
-                            ),
+                            style: TextStyle(fontSize: 14),
                             textAlign: TextAlign.center,
                           ),
                         ),
@@ -64,10 +67,10 @@ class WelcomeScreen extends StatelessWidget {
                         icon: const Icon(Icons.directions_bus),
                         label: const Text('Começar minha jornada'),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.black,
+                          backgroundColor: dark ? TColors.darkBackground: Colors.black87,
                           foregroundColor: Colors.white,
                         ),
-                        onPressed: () => context.go('/onboarding'),
+                        onPressed: () => Get.to(() => const OnboardingScreen()),
                       ),
                     ),
                     const SizedBox(height: 40),
@@ -92,12 +95,10 @@ class WelcomeScreen extends StatelessWidget {
                             ),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                // context.push('/terms');
+                                // Get.to(() => const TermsScreen());
                               },
                           ),
-                          const TextSpan(
-                            text: ' e ',
-                          ),
+                          const TextSpan(text: ' e '),
                           TextSpan(
                             text: 'Política de Privacidade',
                             style: const TextStyle(
@@ -107,7 +108,7 @@ class WelcomeScreen extends StatelessWidget {
                             ),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                // context.push('/privacy');
+                                Get.to(OnboardingScreen());
                               },
                           ),
                         ],

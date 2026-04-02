@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobilidade_urbana_app/features/onboarding/controllers/onboarding_controller.dart';
 import 'package:mobilidade_urbana_app/utils/constants/colors.dart';
+import 'package:mobilidade_urbana_app/utils/helpers/helper_functions.dart';
 
 class OnboardingRouteSelector extends StatelessWidget {
   const OnboardingRouteSelector({super.key});
@@ -9,6 +10,7 @@ class OnboardingRouteSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = OnBoardingController.instance;
+    final dark = THelperFunctions.isDarkMode(context);
 
     final routeOptions = [
       (
@@ -35,7 +37,7 @@ class OnboardingRouteSelector extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: 12),
             decoration: BoxDecoration(
               color: selected
-                  ? Theme.of(context).colorScheme.secondaryContainer
+                  ? dark ? TColors.darkBackground : TColors.lightGrey
                   : Colors.transparent,
               borderRadius: BorderRadius.circular(16),
             ),

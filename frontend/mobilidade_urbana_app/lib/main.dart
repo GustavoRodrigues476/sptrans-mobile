@@ -74,7 +74,7 @@ class App extends StatelessWidget {
       themeMode: ThemeMode.system,
       theme: TAppTheme.lightTheme(fontScale),
       darkTheme: TAppTheme.darkTheme(fontScale),
-      home: const OnboardingScreen(),
+      home: const WelcomeScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

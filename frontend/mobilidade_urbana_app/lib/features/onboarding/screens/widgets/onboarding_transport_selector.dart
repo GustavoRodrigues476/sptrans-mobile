@@ -37,10 +37,10 @@ class OnboardingTransportSelector extends StatelessWidget {
               secondary: Icon(transport.icon),
               title: Text(transport.label),
               contentPadding: EdgeInsets.zero,
-              activeColor: TColors.primaryContainer,
+              activeColor: TColors.white,
               activeTrackColor: TColors.primary,
               inactiveThumbColor: Theme.of(context).colorScheme.outline,
-              inactiveTrackColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+              inactiveTrackColor: Colors.transparent,
             );
           }
         ).toList(),

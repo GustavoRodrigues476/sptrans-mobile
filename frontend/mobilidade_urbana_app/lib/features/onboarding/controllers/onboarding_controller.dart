@@ -1,5 +1,5 @@
-
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobilidade_urbana_app/features/home/pages/screens/home_page.dart';
 
@@ -11,12 +11,14 @@ class OnBoardingController extends GetxController {
 
   final selectedRoutePreference = 'Mais rápida'.obs;
   final transportPreferences = <String, bool>{
-    'Ônibus': true,
-    'Trem': true,
-    'Metrô': true,
+    'Ônibus': false,
+    'Trem': false,
+    'Metrô': false,
   }.obs;
   final slowWalkingPace = false.obs;
   final walkingDuration = 10.0.obs;
+
+  final isShowingValidationSnackbar = false.obs;
 
   bool get canGoNext {
     switch (currentPageIndex.value) {
@@ -34,12 +36,11 @@ class OnBoardingController extends GetxController {
     }
   }
 
-
   void updatePageIndicator(index) => currentPageIndex.value = index;
 
   void dotNavigationClick(index) {
     currentPageIndex.value = index;
-    pageController.jumpTo(index);
+    pageController.jumpToPage(index);
   }
 
   void toggleTransport(String transport, bool value) {
@@ -63,19 +64,19 @@ class OnBoardingController extends GetxController {
     walkingDuration.value = value;
   }
 
-
-
   void previusPage() {
     if (currentPageIndex.value == 0) {
+      Get.back();
       return;
-    } else {
-      final page = currentPageIndex.value - 1;
-      pageController.animateToPage(
-        page,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
     }
+
+    final page = currentPageIndex.value - 1;
+
+    pageController.animateToPage(
+      page,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
   }
 
   void skipPage() {
@@ -84,7 +85,10 @@ class OnBoardingController extends GetxController {
   }
 
   void nextPage() {
-    if (!canGoNext) return;
+    if (!canGoNext) {
+      showValidationSnackbar();
+      return;
+    }
 
     if (currentPageIndex.value == 2) {
       Get.to(() => const HomeScreen());
@@ -98,6 +102,34 @@ class OnBoardingController extends GetxController {
     }
   }
 
+  void showValidationSnackbar() {
+    if (isShowingValidationSnackbar.value) return;
 
+    isShowingValidationSnackbar.value = true;
 
+    String message = '';
+
+    switch (currentPageIndex.value) {
+      case 0:
+        message = 'Selecione pelo menos um meio de transporte.';
+        break;
+      case 1:
+        message = 'Selecione uma preferência de rota.';
+        break;
+      default:
+        message = 'Preencha as informações antes de continuar.';
+    }
+
+    Get.snackbar(
+      'Atenção',
+      message,
+      snackPosition: SnackPosition.BOTTOM,
+      margin: const EdgeInsets.all(16),
+      duration: const Duration(seconds: 2),
+    );
+
+    Future.delayed(const Duration(seconds: 2), () {
+      isShowingValidationSnackbar.value = false;
+    });
+  }
 }

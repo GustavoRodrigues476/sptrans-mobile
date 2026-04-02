@@ -28,7 +28,7 @@ class OnboardingWalkingOptions extends StatelessWidget {
               ),
               Switch(
                 value: controller.slowWalkingPace.value,
-                activeColor: Colors.white,
+                activeThumbColor: Colors.white,
                 activeTrackColor: TColors.primary,
                 inactiveThumbColor: Colors.white,
                 inactiveTrackColor: dark ? Colors.black38: Colors.grey.shade300,
@@ -54,7 +54,7 @@ class OnboardingWalkingOptions extends StatelessWidget {
             children: [
               OutlinedButton.icon(
                 onPressed: () => _showWalkingDurationModal(context),
-                style: ButtonStyle( ),
+                style: ButtonStyle(),
                 icon: const Icon(Icons.directions_walk_outlined, size: 18),
                 label: const Text('Definir duração'),
               ),
