@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
+import 'package:mobilidade_urbana_app/features/welcome/pages/Welcome_page.dart';
+import 'package:mobilidade_urbana_app/utils/constants/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:go_router/go_router.dart';
 
@@ -21,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _resetOnboarding() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.clear();
-    if (mounted) context.go('/welcome');
+    if (mounted) Get.to(WelcomeScreen());
   }
 
   @override
@@ -29,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5FF),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF6C63FF),
+        backgroundColor: TColors.background,
         foregroundColor: Colors.white,
         title: const Text('Configurações Salvas',
             style: TextStyle(fontWeight: FontWeight.bold)),
