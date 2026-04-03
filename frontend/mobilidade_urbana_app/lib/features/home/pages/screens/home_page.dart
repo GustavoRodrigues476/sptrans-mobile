@@ -54,20 +54,21 @@ class _HomeScreenState extends State<HomeScreen> {
             label: const Text('Refazer onboarding'),
             style: OutlinedButton.styleFrom(
               minimumSize: const Size.fromHeight(52),
-              side: const BorderSide(color: Color(0xFF6C63FF)),
-              foregroundColor: const Color(0xFF6C63FF),
+              side: const BorderSide(color: TColors.black),
+              foregroundColor: TColors.black,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(14)),
             ),
           ),
+          const SizedBox(height: 24),
           OutlinedButton.icon(
             onPressed: () => Get.to(() => const OnboardingDebugPage()),
             icon: const Icon(Icons.link),
             label: const Text('Ver Debug do onboarding'),
             style: OutlinedButton.styleFrom(
               minimumSize: const Size.fromHeight(52),
-              side: const BorderSide(color: Color(0xFF6C63FF)),
-              foregroundColor: const Color(0xFF6C63FF),
+              side: const BorderSide(color: TColors.black),
+              foregroundColor: TColors.black,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(14),
               ),
