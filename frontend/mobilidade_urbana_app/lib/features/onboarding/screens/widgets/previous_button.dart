@@ -10,7 +10,7 @@ class OnBoardingPrevious extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = THelperFunctions.isDarkMode(context);
+    final isDark = THelperFunctions.isDarkMode(context);
 
     return Positioned(
       top: TDeviceUtils.getAppBarHeight(),
@@ -19,12 +19,12 @@ class OnBoardingPrevious extends StatelessWidget {
         onPressed: () => OnBoardingController.instance.previusPage(),
         icon: Icon(
           Icons.arrow_back,
-          color: dark ? TColors.light : TColors.dark,
+          color: isDark ? TColors.light : TColors.dark,
         ),
         label: Text(
           'Voltar',
           style: TextStyle(
-            color: dark ? TColors.light : TColors.dark,
+            color: isDark ? TColors.light : TColors.dark,
             fontWeight: FontWeight.w600,
           ),
         ),

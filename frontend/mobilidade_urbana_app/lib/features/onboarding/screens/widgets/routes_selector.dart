@@ -10,7 +10,7 @@ class OnboardingRouteSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = OnBoardingController.instance;
-    final dark = THelperFunctions.isDarkMode(context);
+    final isDark = THelperFunctions.isDarkMode(context);
 
     final routeOptions = [
       (
@@ -37,7 +37,7 @@ class OnboardingRouteSelector extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: 12),
             decoration: BoxDecoration(
               color: selected
-                  ? dark ? TColors.darkBackground : TColors.lightGrey
+                  ? isDark ? TColors.darkBackground : TColors.lightGrey
                   : Colors.transparent,
               borderRadius: BorderRadius.circular(16),
             ),

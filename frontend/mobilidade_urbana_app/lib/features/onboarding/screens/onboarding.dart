@@ -509,13 +509,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobilidade_urbana_app/features/onboarding/controllers/onboarding_controller.dart';
-import 'package:mobilidade_urbana_app/features/onboarding/screens/widgets/onboarding_dot_navigation.dart';
-import 'package:mobilidade_urbana_app/features/onboarding/screens/widgets/onboarding_next_button.dart';
-import 'package:mobilidade_urbana_app/features/onboarding/screens/widgets/onboarding_page_layout1.dart';
-import 'package:mobilidade_urbana_app/features/onboarding/screens/widgets/onboarding_previous.dart';
-import 'package:mobilidade_urbana_app/features/onboarding/screens/widgets/onboarding_routes_selector.dart';
-import 'package:mobilidade_urbana_app/features/onboarding/screens/widgets/onboarding_transport_selector.dart';
-import 'package:mobilidade_urbana_app/features/onboarding/screens/widgets/onboarding_walking_options.dart';
+import 'package:mobilidade_urbana_app/features/onboarding/screens/widgets/dot_navigation.dart';
+import 'package:mobilidade_urbana_app/features/onboarding/screens/widgets/next_button.dart';
+import 'package:mobilidade_urbana_app/features/onboarding/screens/widgets/page_layout1.dart';
+import 'package:mobilidade_urbana_app/features/onboarding/screens/widgets/previous_button.dart';
+import 'package:mobilidade_urbana_app/features/onboarding/screens/widgets/routes_selector.dart';
+import 'package:mobilidade_urbana_app/features/onboarding/screens/widgets/transport_selector.dart';
+import 'package:mobilidade_urbana_app/features/onboarding/screens/widgets/walking_options.dart';
 import 'package:mobilidade_urbana_app/utils/constants/onboarding_texts.dart';
 
 

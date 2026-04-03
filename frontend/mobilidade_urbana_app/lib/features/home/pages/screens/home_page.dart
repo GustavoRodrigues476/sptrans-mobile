@@ -4,6 +4,7 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:mobilidade_urbana_app/features/onboarding/screens/onboarding_debug.dart';
 import 'package:mobilidade_urbana_app/features/welcome/pages/Welcome_page.dart';
 import 'package:mobilidade_urbana_app/utils/constants/colors.dart';
+import 'package:mobilidade_urbana_app/utils/helpers/helper_functions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -30,11 +31,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = THelperFunctions.isDarkMode(context);
+
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5FF),
+      backgroundColor: isDark ? TColors.darkBackground : TColors.background,
       appBar: AppBar(
-        backgroundColor: TColors.background,
-        foregroundColor: Colors.white,
+        backgroundColor: isDark ? TColors.darkBackground : TColors.background,
+        foregroundColor: isDark ? Colors.white : Colors.black,
         title: const Text('Configurações Salvas',
             style: TextStyle(fontWeight: FontWeight.bold)),
         actions: [
@@ -54,8 +57,8 @@ class _HomeScreenState extends State<HomeScreen> {
             label: const Text('Refazer onboarding'),
             style: OutlinedButton.styleFrom(
               minimumSize: const Size.fromHeight(52),
-              side: const BorderSide(color: TColors.black),
-              foregroundColor: TColors.black,
+              side: BorderSide(color: isDark ? Colors.white : Colors.black),
+              foregroundColor: isDark ? Colors.white : Colors.black,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(14)),
             ),
@@ -67,8 +70,8 @@ class _HomeScreenState extends State<HomeScreen> {
             label: const Text('Ver Debug do onboarding'),
             style: OutlinedButton.styleFrom(
               minimumSize: const Size.fromHeight(52),
-              side: const BorderSide(color: TColors.black),
-              foregroundColor: TColors.black,
+              side:  BorderSide(color: isDark ? Colors.white : Colors.black),
+              foregroundColor: isDark ? Colors.white : Colors.black,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(14),
               ),
