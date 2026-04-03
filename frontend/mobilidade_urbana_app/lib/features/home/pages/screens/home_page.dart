@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:mobilidade_urbana_app/features/onboarding/screens/onboarding_debug.dart';
 import 'package:mobilidade_urbana_app/features/welcome/pages/Welcome_page.dart';
 import 'package:mobilidade_urbana_app/utils/constants/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -57,6 +58,19 @@ class _HomeScreenState extends State<HomeScreen> {
               foregroundColor: const Color(0xFF6C63FF),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(14)),
+            ),
+          ),
+          OutlinedButton.icon(
+            onPressed: () => Get.to(() => const OnboardingDebugPage()),
+            icon: const Icon(Icons.link),
+            label: const Text('Ver Debug do onboarding'),
+            style: OutlinedButton.styleFrom(
+              minimumSize: const Size.fromHeight(52),
+              side: const BorderSide(color: Color(0xFF6C63FF)),
+              foregroundColor: const Color(0xFF6C63FF),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14),
+              ),
             ),
           ),
         ],

@@ -10,7 +10,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final onboardingFinished = OnboardingHiveService.isSynced;
+    final onboardingFinished = OnboardingHiveService.isCompleted;
 
     return GetMaterialApp(
       title: 'Mobilidade Urbana',

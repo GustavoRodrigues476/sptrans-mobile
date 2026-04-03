@@ -1,7 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobilidade_urbana_app/features/home/pages/screens/home_page.dart';
+import '../models/onboarding_model.dart';
+import '../services/onboarding_hive_service.dart';
+import '../services/onboarding_api_service.dart';
+import '../../../utils/device/device_token_service.dart';
 
 class OnBoardingController extends GetxController {
   static OnBoardingController get instance => Get.find();
@@ -17,22 +20,24 @@ class OnBoardingController extends GetxController {
   }.obs;
   final slowWalkingPace = false.obs;
   final walkingDuration = 10.0.obs;
-
   final isShowingValidationSnackbar = false.obs;
+
+  final isSaving = false.obs;
+  String _deviceToken = '';
+
+  // busca o token assim que o controller é criado
+  @override
+  void onInit() async {
+    super.onInit();
+    _deviceToken = await DeviceTokenService.get();
+  }
 
   bool get canGoNext {
     switch (currentPageIndex.value) {
-      case 0:
-        return transportPreferences.values.any((value) => value);
-
-      case 1:
-        return selectedRoutePreference.value.isNotEmpty;
-
-      case 2:
-        return true;
-
-      default:
-        return false;
+      case 0: return transportPreferences.values.any((v) => v);
+      case 1: return selectedRoutePreference.value.isNotEmpty;
+      case 2: return true;
+      default: return false;
     }
   }
 
@@ -48,32 +53,20 @@ class OnBoardingController extends GetxController {
     transportPreferences.refresh();
   }
 
-  bool isTransportEnabled(String transport) {
-    return transportPreferences[transport] ?? false;
-  }
+  bool isTransportEnabled(String transport) =>
+      transportPreferences[transport] ?? false;
 
-  void updateRoutePreference(String value) {
-    selectedRoutePreference.value = value;
-  }
+  void updateRoutePreference(String value) =>
+      selectedRoutePreference.value = value;
 
-  void updateSlowWalkingPace(bool value) {
-    slowWalkingPace.value = value;
-  }
+  void updateSlowWalkingPace(bool value) => slowWalkingPace.value = value;
 
-  void updateWalkingDuration(double value) {
-    walkingDuration.value = value;
-  }
+  void updateWalkingDuration(double value) => walkingDuration.value = value;
 
   void previusPage() {
-    if (currentPageIndex.value == 0) {
-      Get.back();
-      return;
-    }
-
-    final page = currentPageIndex.value - 1;
-
+    if (currentPageIndex.value == 0) { Get.back(); return; }
     pageController.animateToPage(
-      page,
+      currentPageIndex.value - 1,
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );
@@ -85,49 +78,74 @@ class OnBoardingController extends GetxController {
   }
 
   void nextPage() {
-    if (!canGoNext) {
-      showValidationSnackbar();
-      return;
-    }
-
+    if (!canGoNext) { showValidationSnackbar(); return; }
     if (currentPageIndex.value == 2) {
-      Get.to(() => const HomeScreen());
+      _salvarENavegar(); // ← NOVO
     } else {
-      final page = currentPageIndex.value + 1;
       pageController.animateToPage(
-        page,
+        currentPageIndex.value + 1,
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
     }
   }
 
+  Future<void> _salvarENavegar() async {
+    isSaving.value = true;
+
+    final model = OnboardingModel(
+      deviceToken: _deviceToken,
+      transportPreferences: transportPreferences.entries
+          .where((e) => e.value)
+          .map((e) => e.key)
+          .toList(),
+      selectedRoutePreference: selectedRoutePreference.value,
+      slowWalkingPace: slowWalkingPace.value,
+      walkingDuration: walkingDuration.value,
+      isCompleted: true,
+    );
+
+    print('=== SALVANDO ONBOARDING ===');
+    print('Device Token: $_deviceToken');
+    print('Transportes: ${model.transportPreferences}');
+    print('Rota: ${model.selectedRoutePreference}');
+    print('Caminhada lenta: ${model.slowWalkingPace}');
+    print('Duração caminhada: ${model.walkingDuration}');
+
+    await OnboardingHiveService.save(model);
+
+    // salva localmente sempre
+    final salvo = OnboardingHiveService.load();
+    print('=== HIVE APÓS SALVAR ===');
+    print('Existe no Hive: ${salvo != null}');
+    print('Sincronizado: ${salvo?.isSynced}');
+    print('Device Token salvo: ${salvo?.deviceToken}');
+
+
+    final apiOk = await OnboardingApiService().enviar(model);
+    print('=== API ===');
+    print('Enviado com sucesso: $apiOk');
+    print('Sincronizado após API: ${OnboardingHiveService.load()?.isSynced}');
+
+    isSaving.value = false;
+    Get.to(() => const HomeScreen());
+  }
+
   void showValidationSnackbar() {
     if (isShowingValidationSnackbar.value) return;
-
     isShowingValidationSnackbar.value = true;
-
-    String message = '';
-
-    switch (currentPageIndex.value) {
-      case 0:
-        message = 'Selecione pelo menos um meio de transporte.';
-        break;
-      case 1:
-        message = 'Selecione uma preferência de rota.';
-        break;
-      default:
-        message = 'Preencha as informações antes de continuar.';
-    }
-
+    final messages = {
+      0: 'Selecione pelo menos um meio de transporte.',
+      1: 'Selecione uma preferência de rota.',
+    };
     Get.snackbar(
       'Atenção',
-      message,
+      messages[currentPageIndex.value] ??
+          'Preencha as informações antes de continuar.',
       snackPosition: SnackPosition.BOTTOM,
       margin: const EdgeInsets.all(16),
       duration: const Duration(seconds: 2),
     );
-
     Future.delayed(const Duration(seconds: 2), () {
       isShowingValidationSnackbar.value = false;
     });

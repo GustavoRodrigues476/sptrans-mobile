@@ -31,7 +31,7 @@ class OnboardingModel extends HiveObject {
     required this.selectedRoutePreference,
     required this.slowWalkingPace,
     required this.walkingDuration,
-    this.isSynced  = false,
+    this.isSynced = false,
     this.isCompleted = false,
   });
 
@@ -48,13 +48,10 @@ class OnboardingModel extends HiveObject {
   factory OnboardingModel.fromJson(Map<String, dynamic> json) {
     return OnboardingModel(
       deviceToken: json['deviceToken'] as String? ?? '',
-      transportPreferences:
-      List<String>.from(json['transportPreferences'] ?? []),
-      selectedRoutePreference:
-      json['selectedRoutePreference'] as String? ?? '',
+      transportPreferences: List<String>.from(json['transportPreferences'] ?? []),
+      selectedRoutePreference: json['selectedRoutePreference'] as String? ?? '',
       slowWalkingPace: json['slowWalkingPace'] as bool? ?? false,
-      walkingDuration:
-      (json['walkingDuration'] as num?)?.toDouble() ?? 0.0,
+      walkingDuration: (json['walkingDuration'] as num?)?.toDouble() ?? 0.0,
       isSynced: json['isSynced'] as bool? ?? false,
       isCompleted: json['isCompleted'] as bool? ?? false,
     );
