@@ -4,7 +4,6 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:mobilidade_urbana_app/features/welcome/pages/Welcome_page.dart';
 import 'package:mobilidade_urbana_app/utils/constants/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
