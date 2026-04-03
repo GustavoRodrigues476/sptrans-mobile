@@ -14,25 +14,34 @@ class OnboardingWalkingOptions extends StatelessWidget {
     final isDark = THelperFunctions.isDarkMode(context);
     final controller = OnBoardingController.instance;
 
-    return Obx(
-          () => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: TSizes.spaceBtwSections),
-          _WalkingPaceSwitch(isDark: isDark, controller: controller),
-          const SizedBox(height: TSizes.spaceBtwSections),
-          _WalkingDurationSection(controller: controller, context: context),
-        ],
-      ),
-    );
+    return Obx(() => Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: TSizes.spaceBtwSections),
+        _WalkingPaceSwitch(
+          isDark: isDark,
+          value: controller.slowWalkingPace.value,
+          onChanged: controller.updateSlowWalkingPace,
+        ),
+        const SizedBox(height: TSizes.spaceBtwSections),
+        _WalkingDurationSection(
+          duration: controller.walkingDuration.value,
+        ),
+      ],
+    ));
   }
 }
 
 class _WalkingPaceSwitch extends StatelessWidget {
   final bool isDark;
-  final OnBoardingController controller;
+  final bool value;
+  final ValueChanged<bool> onChanged;
 
-  const _WalkingPaceSwitch({required this.isDark, required this.controller});
+  const _WalkingPaceSwitch({
+    required this.isDark,
+    required this.value,
+    required this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -45,12 +54,12 @@ class _WalkingPaceSwitch extends StatelessWidget {
           ),
         ),
         Switch(
-          value: controller.slowWalkingPace.value,
+          value: value,
           activeThumbColor: Colors.white,
           activeTrackColor: TColors.primary,
           inactiveThumbColor: Colors.white,
           inactiveTrackColor: isDark ? Colors.black38 : Colors.grey.shade300,
-          onChanged: controller.updateSlowWalkingPace,
+          onChanged: onChanged,
         ),
       ],
     );
@@ -58,17 +67,21 @@ class _WalkingPaceSwitch extends StatelessWidget {
 }
 
 class _WalkingDurationSection extends StatelessWidget {
-  final OnBoardingController controller;
-  final BuildContext context;
+  final double duration;
 
-  const _WalkingDurationSection({required this.controller, required this.context});
+  const _WalkingDurationSection({required this.duration});
 
   @override
   Widget build(BuildContext context) {
+    final isDark = THelperFunctions.isDarkMode(context);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Duração da caminhada', style: Theme.of(context).textTheme.titleLarge),
+        Text(
+          'Duração da caminhada',
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
         const SizedBox(height: TSizes.spaceBtwItems / 2),
         Text(
           'Define o máximo de minutos para cada seção de caminhada da sua viagem',
@@ -79,15 +92,19 @@ class _WalkingDurationSection extends StatelessWidget {
           children: [
             OutlinedButton.icon(
               onPressed: () => WalkingDurationBottomSheet.show(context),
+              style: OutlinedButton.styleFrom(
+                foregroundColor: isDark ? Colors.white : Colors.black,
+                side: BorderSide(color: isDark ? Colors.white : Colors.black),
+              ),
               icon: const Icon(Icons.directions_walk_outlined, size: 18),
               label: const Text('Definir duração'),
             ),
             const SizedBox(width: TSizes.spaceBtwItems),
             Expanded(
               child: Text(
-                controller.walkingDuration.value >= 60
+                duration >= 60
                     ? 'Padrão (sem limite)'
-                    : '${controller.walkingDuration.value.toInt()} min',
+                    : '${duration.toInt()} min',
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
             ),
