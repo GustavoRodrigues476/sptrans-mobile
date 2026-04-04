@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mobilidade_urbana_app/features/home/pages/screens/home_page.dart';
+import 'package:mobilidade_urbana_app/features/onboarding/screens/success_screen.dart';
 import '../models/onboarding_model.dart';
 import '../services/onboarding_hive_service.dart';
 import '../services/onboarding_api_service.dart';
@@ -80,7 +81,7 @@ class OnBoardingController extends GetxController {
   void nextPage() {
     if (!canGoNext) { showValidationSnackbar(); return; }
     if (currentPageIndex.value == 2) {
-      _salvarENavegar(); // ← NOVO
+      _saveAndNavigate(); // ← NOVO
     } else {
       pageController.animateToPage(
         currentPageIndex.value + 1,
@@ -90,7 +91,7 @@ class OnBoardingController extends GetxController {
     }
   }
 
-  Future<void> _salvarENavegar() async {
+  Future<void> _saveAndNavigate() async {
     isSaving.value = true;
 
     final model = OnboardingModel(
@@ -105,30 +106,30 @@ class OnBoardingController extends GetxController {
       isCompleted: true,
     );
 
-    print('=== SALVANDO ONBOARDING ===');
-    print('Device Token: $_deviceToken');
-    print('Transportes: ${model.transportPreferences}');
-    print('Rota: ${model.selectedRoutePreference}');
-    print('Caminhada lenta: ${model.slowWalkingPace}');
-    print('Duração caminhada: ${model.walkingDuration}');
+    // print('=== SALVANDO ONBOARDING ===');
+    // print('Device Token: $_deviceToken');
+    // print('Transportes: ${model.transportPreferences}');
+    // print('Rota: ${model.selectedRoutePreference}');
+    // print('Caminhada lenta: ${model.slowWalkingPace}');
+    // print('Duração caminhada: ${model.walkingDuration}');
 
     await OnboardingHiveService.save(model);
 
     // salva localmente sempre
     final salvo = OnboardingHiveService.load();
-    print('=== HIVE APÓS SALVAR ===');
-    print('Existe no Hive: ${salvo != null}');
-    print('Sincronizado: ${salvo?.isSynced}');
-    print('Device Token salvo: ${salvo?.deviceToken}');
+    // print('=== HIVE APÓS SALVAR ===');
+    // print('Existe no Hive: ${salvo != null}');
+    // print('Sincronizado: ${salvo?.isSynced}');
+    // print('Device Token salvo: ${salvo?.deviceToken}');
 
 
     final apiOk = await OnboardingApiService().enviar(model);
-    print('=== API ===');
-    print('Enviado com sucesso: $apiOk');
-    print('Sincronizado após API: ${OnboardingHiveService.load()?.isSynced}');
+    // print('=== API ===');
+    // print('Enviado com sucesso: $apiOk');
+    // print('Sincronizado após API: ${OnboardingHiveService.load()?.isSynced}');
 
     isSaving.value = false;
-    Get.to(() => const HomeScreen());
+    Get.to(() => const OnboardingSuccessScreen());
   }
 
   void showValidationSnackbar() {

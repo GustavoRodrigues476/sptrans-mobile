@@ -36,13 +36,7 @@ class OnboardingModel extends HiveObject {
   });
 
   Map<String, dynamic> toJson() => {
-    'deviceToken': deviceToken,
-    'transportPreferences': transportPreferences,
-    'selectedRoutePreference': selectedRoutePreference,
-    'slowWalkingPace': slowWalkingPace,
-    'walkingDuration': walkingDuration,
-    'isSynced': isSynced,
-    'isCompleted': isCompleted,
+
   };
 
   factory OnboardingModel.fromJson(Map<String, dynamic> json) {
