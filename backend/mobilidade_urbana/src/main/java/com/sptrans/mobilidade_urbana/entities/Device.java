@@ -12,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 @Entity
@@ -41,6 +42,11 @@ public class Device {
 		this.appVersion = appVersion;
 		this.createdAt = createdAt;
 	}
+	
+	@PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+    }
 
 	public Long getDeviceId() {
 		return deviceId;
