@@ -64,7 +64,7 @@ class OnBoardingController extends GetxController {
 
   void updateWalkingDuration(double value) => walkingDuration.value = value;
 
-  void previusPage() {
+  void previousPage() {
     if (currentPageIndex.value == 0) { Get.back(); return; }
     pageController.animateToPage(
       currentPageIndex.value - 1,
@@ -106,27 +106,9 @@ class OnBoardingController extends GetxController {
       isCompleted: true,
     );
 
-    // print('=== SALVANDO ONBOARDING ===');
-    // print('Device Token: $_deviceToken');
-    // print('Transportes: ${model.transportPreferences}');
-    // print('Rota: ${model.selectedRoutePreference}');
-    // print('Caminhada lenta: ${model.slowWalkingPace}');
-    // print('Duração caminhada: ${model.walkingDuration}');
+
 
     await OnboardingHiveService.save(model);
-
-    // salva localmente sempre
-    final salvo = OnboardingHiveService.load();
-    // print('=== HIVE APÓS SALVAR ===');
-    // print('Existe no Hive: ${salvo != null}');
-    // print('Sincronizado: ${salvo?.isSynced}');
-    // print('Device Token salvo: ${salvo?.deviceToken}');
-
-
-    final apiOk = await OnboardingApiService().send(model);
-    // print('=== API ===');
-    // print('Enviado com sucesso: $apiOk');
-    // print('Sincronizado após API: ${OnboardingHiveService.load()?.isSynced}');
 
     isSaving.value = false;
     Get.to(() => const OnboardingSuccessScreen());

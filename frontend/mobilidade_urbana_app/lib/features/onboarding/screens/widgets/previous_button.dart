@@ -16,7 +16,7 @@ class OnBoardingPrevious extends StatelessWidget {
       top: TDeviceUtils.getAppBarHeight(),
       left: TSizes.defaultSpace - 16,
       child: TextButton.icon(
-        onPressed: () => OnBoardingController.instance.previusPage(),
+        onPressed: () => OnBoardingController.instance.previousPage(),
         icon: Icon(
           Icons.arrow_back,
           color: isDark ? TColors.light : TColors.dark,
