@@ -123,7 +123,7 @@ class OnBoardingController extends GetxController {
     // print('Device Token salvo: ${salvo?.deviceToken}');
 
 
-    final apiOk = await OnboardingApiService().enviar(model);
+    final apiOk = await OnboardingApiService().send(model);
     // print('=== API ===');
     // print('Enviado com sucesso: $apiOk');
     // print('Sincronizado após API: ${OnboardingHiveService.load()?.isSynced}');

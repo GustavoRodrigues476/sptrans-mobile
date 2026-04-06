@@ -3,6 +3,7 @@ import 'package:uuid/uuid.dart';
 
 class DeviceTokenService {
   static const _key = 'device_token';
+  
 
   static Future<String> getOrCreate() async {
     final prefs = await SharedPreferences.getInstance();
